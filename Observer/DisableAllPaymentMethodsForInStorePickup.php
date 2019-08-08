@@ -20,7 +20,7 @@ class DisableAllPaymentMethodsForInStorePickup implements \Magento\Framework\Eve
         $shippingMethod = $this->cart->getQuote()->getShippingAddress()->getShippingMethod();
         $paymentMethod = $observer->getEvent()->getMethodInstance()->getCode();
 
-        if ($paymentMethod != "instorepickuppayment" && $shippingMethod == 'tablerate_pickup') {
+        if ($paymentMethod != "instorepickuppayment" && $shippingMethod == 'in_store_pickup') {
             $checkResult = $observer->getEvent()->getResult();
             $checkResult->setData('is_available', false);
         }
