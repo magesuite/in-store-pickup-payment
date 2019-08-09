@@ -11,8 +11,6 @@ class DisableAllPaymentMethodsForInStorePickup implements \Magento\Framework\Eve
     }
 
     /**
-     * payment_method_is_active event handler.
-     *
      * @param \Magento\Framework\Event\Observer $observer
      */
     public function execute(\Magento\Framework\Event\Observer $observer)
@@ -20,12 +18,12 @@ class DisableAllPaymentMethodsForInStorePickup implements \Magento\Framework\Eve
         $shippingMethod = $this->cart->getQuote()->getShippingAddress()->getShippingMethod();
         $paymentMethod = $observer->getEvent()->getMethodInstance()->getCode();
 
-        if ($paymentMethod != "instorepickuppayment" && $shippingMethod == 'in_store_pickup') {
+        if ($paymentMethod != \MageSuite\InStorePickupPayment\Model\Payment\InStorePickup::PAYMENT_METHOD_INSTOREPICKUPPAYMENT_CODE && $shippingMethod == \Magento\InventoryInStorePickupShippingApi\Model\Carrier\InStorePickup::DELIVERY_METHOD) {
             $checkResult = $observer->getEvent()->getResult();
             $checkResult->setData('is_available', false);
         }
 
-        if ($paymentMethod == "instorepickuppayment" && $shippingMethod != 'in_store_pickup') {
+        if ($paymentMethod == \MageSuite\InStorePickupPayment\Model\Payment\InStorePickup::PAYMENT_METHOD_INSTOREPICKUPPAYMENT_CODE && $shippingMethod != \Magento\InventoryInStorePickupShippingApi\Model\Carrier\InStorePickup::DELIVERY_METHOD) {
             $checkResult = $observer->getEvent()->getResult();
             $checkResult->setData('is_available', false);
         }
