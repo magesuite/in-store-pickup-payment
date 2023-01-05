@@ -5,4 +5,3 @@
     'MageSuite_InStorePickupPayment',
     __DIR__
 );
-
